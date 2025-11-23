@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import Navbar from "@/components/general/navbar/navbar";
+import Footer from "@/components/general/footer/footer";
+import ProductQuickviews from "@/components/pages/catalog/product-quickviews/product-quickviews";
+import ApolloWrapper from "@/components/providers/appolo-providers";
+import CartComponent from "@/components/pages/cart/cart-component";
+
 import "./globals.css";
+import ToasterRootComponent from "@/components/general/toaster/toaster-root-component";
+import ConfirmDialog from "@/components/general/confirm/confirm-dialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +32,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ToasterRootComponent />
+        <ApolloWrapper>
+          <Navbar />
+          {children}
+          <Footer />
+          <CartComponent />
+          <ProductQuickviews />
+          <ConfirmDialog />
+        </ApolloWrapper>
       </body>
     </html>
   );
