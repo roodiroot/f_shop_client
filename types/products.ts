@@ -1,30 +1,41 @@
-export interface ProductImageFormats {
-  thumbnail?: { url: string };
-  small?: { url: string };
-  medium?: { url: string };
-  large?: { url: string };
-}
+import { ShortCategoryType } from "./category";
 
-export interface ProductImage {
-  formats: ProductImageFormats;
-}
-
-export interface ProductAttributes {
-  documentId: string;
-  slug: string;
+export interface ProductVariant {
   price?: number;
-  shortName?: string;
+  size?: string;
+  color?: string;
+  colorHex?: string;
+  stock?: number;
+  images?: ProductImage[];
+}
+
+export interface ShortProductType {
+  slug: string;
+  documentId: string;
+  shortName: string;
+  product_variants: ProductVariant[];
+}
+
+export interface ProductAttributes extends ShortProductType {
   subcategory?: string;
   vendor?: string;
   categoryParam?: string;
-  images: ProductImage[];
 }
 
-export interface PageInfo {
-  page: number;
-  pageCount: number;
-  pageSize: number;
-  total: number;
+export interface Product extends ProductAttributes {
+  sku?: string;
+  description?: string;
+  manufaktura?: string;
+  composition?: string;
+  denomination?: string;
+  fitBottom?: string;
+  topBottom?: string;
+  rise?: string;
+  waist?: string;
+  gender?: string;
+  season?: string;
+  seasonality?: string;
+  categories: ShortCategoryType[];
 }
 
 export interface ProductConnection {
@@ -36,44 +47,25 @@ export interface ProductsQueryResponse {
   products_connection: ProductConnection;
 }
 
-export interface Product {
-  slug: string;
-  documentId: string;
-
-  sku?: string;
-  name?: string;
-  shortName?: string;
-  description?: string;
-  price?: number;
-  oldPrice?: number;
-  vendor?: string;
-  manufaktura?: string;
-  color?: string;
-  categoryParam?: string;
-  composition?: string;
-  count?: number | null;
-  denomination?: string;
-  fitBottom?: string;
-  topBottom?: string;
-  rise?: string;
-  waist?: string;
-  size?: string;
-  gender?: string;
-  season?: string;
-  seasonality?: string;
-  subcategory?: string;
-  images?: ProductImage[];
-}
-
 export interface ProductResponce {
   product: Product;
 }
 
-export type ShortProductType = {
-  slug: string;
-  documentId: string;
-  price: number;
-  shortName: string;
-  name: string;
-  images: ProductImage[];
-};
+export interface PageInfo {
+  page: number;
+  pageCount: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface ProductImageFormats {
+  thumbnail?: { url: string };
+  small?: { url: string };
+  medium?: { url: string };
+  large?: { url: string };
+  url?: string;
+}
+
+export interface ProductImage {
+  formats: ProductImageFormats;
+}

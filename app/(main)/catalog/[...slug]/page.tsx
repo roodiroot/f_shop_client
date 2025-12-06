@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+import { connection } from "next/server";
+
 import client from "@/lib/apollo-client";
 
 import CatalogList from "@/components/pages/catalog/catalog-list";
@@ -5,14 +8,15 @@ import FiltersWrapper from "@/components/pages/catalog/filters-wrapper";
 
 import { getFilters } from "@/data/filters";
 import { GET_CATEGORY_BY_SLUG } from "@/graphql/category";
-import { CategoryDocumentIdType } from "@/types/category";
 import { collectSlugs } from "@/lib/collect-slugs";
+import { CategoryDocumentIdType } from "@/types/category";
 
 const CatalogPage = async ({
   params,
 }: {
   params: Promise<{ slug: string[] }>;
 }) => {
+  await connection();
   const slugParams = (await params).slug;
 
   const { data } = await client.query<CategoryDocumentIdType>({
@@ -24,8 +28,6 @@ const CatalogPage = async ({
     },
   });
 
-  console.log("RENDER");
-
   const slugs = collectSlugs(data?.categories[0]);
 
   const c = data?.categories?.[0];
@@ -35,7 +37,9 @@ const CatalogPage = async ({
 
   return (
     <FiltersWrapper categoryName={categoryName} dataFilters={filters?.filters}>
-      <CatalogList categories={slugs} />
+      <Suspense>
+        <CatalogList categories={slugs} />
+      </Suspense>
     </FiltersWrapper>
   );
 };

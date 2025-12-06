@@ -6,8 +6,6 @@ export type CartItem = {
   slug: string;
   imageUrl: string;
   name: string;
-  price: number;
-  color: string;
   quantity: number;
 };
 
@@ -26,13 +24,11 @@ export const useCart = create<CartState>()(
       addToCart: (newItem) => {
         const items = get().items;
 
-        const existing = items.find(
-          (i) => i.name === newItem.name && i.color === newItem.color
-        );
+        const existing = items.find((i) => i.name === newItem.name);
 
         if (existing) {
           const updated = items.map((i) =>
-            i.name === newItem.name && i.color === newItem.color
+            i.name === newItem.name
               ? { ...i, quantity: i.quantity + newItem.quantity }
               : i
           );

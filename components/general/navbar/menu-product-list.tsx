@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 
-import { CategoryRootType } from "@/graphql/category";
-import { ShortProductType } from "@/types/products";
-import { getImageUrl } from "@/lib/get-image-url";
 import CardNavigationItem from "./card-navigatin-item";
+
+import { ShortProductType } from "@/types/products";
+import { CategoryRootType } from "@/types/category";
 
 interface MenuProductListProps extends React.HTMLAttributes<HTMLDivElement> {
   category?: CategoryRootType;

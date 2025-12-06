@@ -1,10 +1,31 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 import { useCart } from "@/hooks/use-cart";
+import { Button } from "@/components/ui/button";
 import { getFormatPrice } from "@/lib/get-format-price";
 
-const SumComponent = () => {
-  const total = useCart((state) =>
-    state.items.reduce((summ, item) => summ + item.price * item.quantity, 0)
+interface SumContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  close?: () => void;
+}
+
+const SumComponent: React.FC<SumContentProps> = ({ close }) => {
+  const router = useRouter();
+  const { items } = useCart();
+
+  const total = items.reduce(
+    (summ, item) => summ + item.price * item.quantity,
+    0
   );
+
+  const handleSubmit = () => {
+    if (items.length) {
+      router.push("/checkout");
+      close && close();
+    }
+  };
+
   return (
     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
       <div className="flex justify-between text-base font-medium text-gray-900">
@@ -15,18 +36,19 @@ const SumComponent = () => {
         Доставка и налоги будут рассчитаны при оформлении заказа.
       </p>
       <div className="mt-6">
-        <a
-          href="#"
-          className="flex items-center justify-center rounded-md border border-transparent bg-brand px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-brand/80"
+        <Button
+          disabled={!items.length}
+          onClick={handleSubmit}
+          className="w-full"
+          size="lg"
         >
           Оформить заказ
-        </a>
+        </Button>
       </div>
       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
         <p>
           или{" "}
           <button
-            type="button"
             onClick={close}
             className="font-medium text-brand hover:text-brand/80"
           >

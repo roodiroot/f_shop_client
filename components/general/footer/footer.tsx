@@ -85,7 +85,7 @@ const Footer = () => {
                 className="block w-full rounded-md bg-white px-4 py-2 text-base text-gray-900 outline"
               ></input>
               <div className="mt-4 sm:mt-0 sm:ml-4 sm:shrink-0 lg:mt-4 lg:ml-0">
-                <button className="flex w-full items-center justify-center rounded-md border border-white bg-gray-800 px-4 py-2 text-base font-medium text-white shadow-xs">
+                <button className="flex w-full items-center justify-center rounded-md border border-white bg-brand px-4 py-2 text-base font-medium text-white shadow-xs">
                   Подписаться
                 </button>
               </div>

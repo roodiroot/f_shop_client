@@ -158,8 +158,9 @@ const navigation = {
 const MobilMenu: React.FC<MobilMenuProps> = ({ dataCategories }) => {
   const { isOpen, close } = useMobilMenu();
 
-  const defaultValue = dataCategories?.filter((i) => i.products.length <= 0)[0]
-    .documentId;
+  const defaultValue = dataCategories?.filter(
+    (i) => i.products.length <= 0
+  )?.[0]?.documentId;
 
   return (
     <Sheet open={isOpen} onOpenChange={close}>

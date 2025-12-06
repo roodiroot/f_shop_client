@@ -48,12 +48,7 @@ export const GET_CATEGORIES_ROOT = gql`
       products(sort: $productSort, pagination: { limit: 4 }) {
         slug
         documentId
-        price
         shortName
-        name
-        images {
-          formats
-        }
       }
       children {
         slug
@@ -62,35 +57,19 @@ export const GET_CATEGORIES_ROOT = gql`
         products(pagination: { limit: 1 }) {
           slug
           documentId
-          price
           shortName
-          name
-          images {
-            formats
+          product_variants {
+            price
+            size
+            color
+            stock
+            colorHex
+            images {
+              formats
+            }
           }
         }
       }
     }
   }
 `;
-
-// export const GET_CATEGORY_RECURCIVE = gql`
-//   query Categories {
-//     categories {
-//       documentId
-//       name
-//       slug
-//       parent {
-//         documentId
-//         name
-//         slug
-//       }
-//       children {
-//         documentId
-//         name
-//         slug
-//         }
-//       }
-//     }
-//   }
-// `;

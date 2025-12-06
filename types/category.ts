@@ -23,3 +23,9 @@ export type TypeShort = {
 export type CategoryDocumentIdType = {
   categories: TypeShort[];
 };
+
+export interface ShortCategoryType {
+  name: string;
+  slug: string;
+  parent: ShortCategoryType;
+}

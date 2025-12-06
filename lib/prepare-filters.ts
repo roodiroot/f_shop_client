@@ -10,7 +10,7 @@ export function prepareFilters(filters?: Filters) {
     season: "Сезон",
     seasonality: "Сезонность",
     composition: "Состав",
-    denomination: "Наминал",
+    denomination: "Номинал",
     categoryParam: "Категории",
   };
 

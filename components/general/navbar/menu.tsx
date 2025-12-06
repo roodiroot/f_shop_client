@@ -6,10 +6,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
-import { CategoryRootType } from "@/graphql/category";
-import { ShortProductType } from "@/types/products";
+
 import MenuProductList from "./menu-product-list";
 import MenuModulesList from "./menu-modules-list";
+
+import { ShortProductType } from "@/types/products";
+import { CategoryRootType } from "@/types/category";
 
 interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
   dataCategories?: CategoryRootType[];

@@ -1,7 +1,4 @@
-import {
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import client from "@/lib/apollo-client";
 
 import Burger from "./burger";
@@ -12,6 +9,8 @@ import { GET_CATEGORIES_ROOT } from "@/graphql/category";
 import { CategoryRootType } from "@/types/category";
 import CartNavbar from "./cart-navbar";
 import { Icons } from "@/components/ui/icons";
+import Link from "next/link";
+import PermisionComponent from "./permision-component";
 
 const Navbar = async () => {
   const { data: dataCategories } = await client.query<{
@@ -26,6 +25,7 @@ const Navbar = async () => {
       },
       productSort: ["createdAt:desc"],
     },
+    fetchPolicy: "no-cache",
   });
 
   return (
@@ -48,31 +48,17 @@ const Navbar = async () => {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <Link href="/">
                   <span className="sr-only">Your Company</span>
                   <Icons.Logo className="size-12" />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
               <Menu dataCategories={dataCategories?.categories} />
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Войти
-                  </a>
-                  <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Создать акаунт
-                  </a>
-                </div>
+                <PermisionComponent />
 
                 {/* Search */}
                 <div className="flex lg:ml-6">

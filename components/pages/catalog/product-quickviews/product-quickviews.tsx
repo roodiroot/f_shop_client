@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { useProductQuickview } from "@/hooks/use-product-quickview";
 import { useCart } from "@/hooks/use-cart";
 import { getImageUrl } from "@/lib/get-image-url";
+import { toast } from "@/components/ui/sonner";
+import { getFormatPrice } from "@/lib/get-format-price";
 
 const productDEMO = {
   name: "Basic Tee 6-Pack",
@@ -92,7 +94,9 @@ const ProductQuickviews = () => {
                       Product information
                     </h3>
 
-                    <p className="text-2xl text-gray-900">{product?.price}</p>
+                    <p className="text-2xl text-gray-900">
+                      {getFormatPrice(product?.price)}
+                    </p>
 
                     {/* Reviews */}
                     <div className="mt-6">
@@ -117,7 +121,7 @@ const ProductQuickviews = () => {
                         </p>
                         <a
                           href="#"
-                          className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                          className="ml-3 text-sm font-medium text-brand hover:text-brand/80"
                         >
                           {productDEMO.reviewCount} reviews
                         </a>
@@ -167,7 +171,7 @@ const ProductQuickviews = () => {
                           </div>
                           <a
                             href="#"
-                            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                            className="text-sm font-medium text-brand hover:text-brand/80"
                           >
                             Size guide
                           </a>
@@ -178,7 +182,7 @@ const ProductQuickviews = () => {
                             <label
                               key={size.name}
                               aria-label={size.name}
-                              className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-indigo-600 has-checked:bg-indigo-600 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-600 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
+                              className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-brand has-checked:bg-brand has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brand has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
                             >
                               <input
                                 defaultValue={size.name}
@@ -208,8 +212,12 @@ const ProductQuickviews = () => {
                             color: product?.vendor || "",
                             quantity: 1,
                           });
+                          toast({
+                            title: "Товар добавлен в корзину!",
+                            description: product?.shortName,
+                          });
                         }}
-                        className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+                        className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-brand px-8 py-3 text-base font-medium text-white hover:bg-neutral-700 focus:ring-2 focus:ring-brand/80 focus:ring-offset-2 focus:outline-hidden"
                       >
                         Добавить в корзину
                       </button>

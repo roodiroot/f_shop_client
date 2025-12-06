@@ -1,27 +1,34 @@
 import CatalogList from "@/components/pages/catalog/catalog-list";
 import FiltersWrapper from "@/components/pages/catalog/filters-wrapper";
-import { GET_PRODUCTS } from "@/graphql/products";
+import { getFilters } from "@/data/filters";
+import { GET_CATEGORY_BY_SLUG } from "@/graphql/category";
 import client from "@/lib/apollo-client";
-import { ProductsQueryResponse } from "@/types/products";
+import { collectSlugs } from "@/lib/collect-slugs";
+import { CategoryDocumentIdType } from "@/types/category";
+import { connection } from "next/server";
+import { Suspense } from "react";
 
 const CatalogPage = async () => {
-  const { data } = await client.query<ProductsQueryResponse>({
-    query: GET_PRODUCTS,
-    variables: {
-      sort: ["createdAt:desc"],
-      pagination: {
-        page: 1,
-        pageSize: 99,
-      },
-    },
+  await connection();
+  const { data } = await client.query<CategoryDocumentIdType>({
+    query: GET_CATEGORY_BY_SLUG,
   });
 
+  console.log("RENDER");
+
+  const slugs = collectSlugs(data?.categories[0]);
+
+  const c = data?.categories?.[0];
+  const categoryName = c?.name || "";
+  const categoryId = c?.documentId || "";
+  const filters = await getFilters(categoryId);
+
   return (
-    <div className="">
-      <FiltersWrapper>
-        <CatalogList products={data?.products} />
-      </FiltersWrapper>
-    </div>
+    <FiltersWrapper categoryName={categoryName} dataFilters={filters?.filters}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <CatalogList categories={slugs} />
+      </Suspense>
+    </FiltersWrapper>
   );
 };
 

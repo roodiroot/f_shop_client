@@ -10,6 +10,7 @@ import CartComponent from "@/components/pages/cart/cart-component";
 import "./globals.css";
 import ToasterRootComponent from "@/components/general/toaster/toaster-root-component";
 import ConfirmDialog from "@/components/general/confirm/confirm-dialog";
+import { AuthProvider } from "@/context/authcontext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,14 +37,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToasterRootComponent />
         <ApolloWrapper>
-          <Navbar />
-          {children}
-          <Footer />
-          <CartComponent />
-          <ProductQuickviews />
-          <ConfirmDialog />
+          <AuthProvider>
+            <ToasterRootComponent />
+            <Navbar />
+            {children}
+            <Footer />
+            <CartComponent />
+            <ProductQuickviews />
+            <ConfirmDialog />
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>

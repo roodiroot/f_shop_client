@@ -14,13 +14,19 @@ export const GET_PRODUCTS = gql`
       nodes {
         slug
         documentId
-        price
         shortName
         subcategory
         vendor
         categoryParam
-        images {
-          formats
+        product_variants {
+          price
+          size
+          color
+          stock
+          colorHex
+          images {
+            formats
+          }
         }
       }
       pageInfo {
@@ -37,31 +43,32 @@ export const GET_PRODUCT_BY_ID = gql`
   query Product($documentId: ID!) {
     product(documentId: $documentId) {
       slug
-      color
       categoryParam
       composition
-      count
       denomination
       description
       documentId
       fitBottom
       gender
       manufaktura
-      name
-      oldPrice
-      price
       rise
       season
       seasonality
       shortName
-      size
       sku
       subcategory
       topBottom
       vendor
       waist
-      images {
-        formats
+      product_variants {
+        price
+        size
+        color
+        stock
+        colorHex
+        images {
+          formats
+        }
       }
     }
   }
@@ -70,31 +77,44 @@ export const GET_PRODUCT_BY_SLUG = gql`
   query Products($filters: ProductFiltersInput) {
     products(filters: $filters) {
       slug
-      color
       categoryParam
       composition
-      count
       denomination
       description
       documentId
       fitBottom
       gender
       manufaktura
-      name
-      oldPrice
-      price
       rise
       season
       seasonality
       shortName
-      size
       sku
       subcategory
       topBottom
       vendor
       waist
-      images {
-        formats
+      product_variants {
+        price
+        size
+        color
+        colorHex
+        stock
+        images {
+          formats
+        }
+      }
+      categories {
+        name
+        slug
+        parent {
+          name
+          slug
+          parent {
+            name
+            slug
+          }
+        }
       }
     }
   }

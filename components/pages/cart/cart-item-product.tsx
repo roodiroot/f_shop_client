@@ -52,7 +52,7 @@ const CartItemProduct: React.FC<CartItemProductProps> = ({
           <p className="mt-1 text-sm text-gray-500">{color}</p>
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
-          <p className="text-gray-500">Qty {quantity}</p>
+          <p className="text-gray-500">Шт. {quantity}</p>
 
           <div className="flex">
             <TrashIcon

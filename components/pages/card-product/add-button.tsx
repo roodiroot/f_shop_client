@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface AddProductCartButtonProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  product: Omit<CartItem, "quantity">;
+  product?: Omit<CartItem, "quantity">;
 }
 
 const AddProductCartButton: React.FC<AddProductCartButtonProps> = ({
@@ -16,15 +16,18 @@ const AddProductCartButton: React.FC<AddProductCartButtonProps> = ({
   const { addToCart, items } = useCart();
   const { open } = useCartModalOpen();
 
-  const disabled = items.map((i) => i.documentId).includes(product.documentId);
+  const disabled = items
+    .map((i) => i.documentId)
+    .includes(product?.documentId || "");
   const adding = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!product.documentId) return;
+    if (!product?.documentId) return;
 
     addToCart({ ...product, quantity: 1 });
+
     toast({
       title: "Товар добавлен в корзину!",
-      description: product.name,
+      description: product?.name,
     });
   };
   return (

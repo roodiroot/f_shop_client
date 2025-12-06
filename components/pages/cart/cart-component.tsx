@@ -19,7 +19,6 @@ import CartItemProduct from "./cart-item-product";
 const CartComponent = () => {
   const { isOpen, close } = useCartModalOpen();
   const { items, removeFromCart } = useCart();
-
   const { ask } = useConfirm();
 
   const removeItemCart = (documentId: string) => {
@@ -78,7 +77,7 @@ const CartComponent = () => {
             </div>
           </div>
 
-          <SumComponent />
+          <SumComponent close={close} />
         </div>
       </SheetContent>
     </Sheet>
