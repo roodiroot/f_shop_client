@@ -1,37 +1,22 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import client from "@/lib/apollo-client";
+import Link from "next/link";
 
-import Burger from "./burger";
 import Menu from "./menu";
+import Burger from "./burger";
+import CartNavbar from "./cart-navbar";
 import MobilMenu from "../mobil-menu/mobil-menu";
 
-import { GET_CATEGORIES_ROOT } from "@/graphql/category";
-import { CategoryRootType } from "@/types/category";
-import CartNavbar from "./cart-navbar";
 import { Icons } from "@/components/ui/icons";
-import Link from "next/link";
-import PermisionComponent from "./permision-component";
+import { getRootCategories } from "@/data/api/categories";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import PermissionComponent from "./permission-component";
 
 const Navbar = async () => {
-  const { data: dataCategories } = await client.query<{
-    categories: CategoryRootType[];
-  }>({
-    query: GET_CATEGORIES_ROOT,
-    variables: {
-      filters: {
-        parent: {
-          documentId: null,
-        },
-      },
-      productSort: ["createdAt:desc"],
-    },
-    fetchPolicy: "no-cache",
-  });
+  const { data, ok } = await getRootCategories();
 
   return (
     <div className="bg-white">
       {/* Mobile menu */}
-      <MobilMenu dataCategories={dataCategories?.categories} />
+      <MobilMenu dataCategories={data} />
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-neutral-800 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
@@ -55,10 +40,10 @@ const Navbar = async () => {
               </div>
 
               {/* Flyout menus */}
-              <Menu dataCategories={dataCategories?.categories} />
+              <Menu dataCategories={data} />
 
               <div className="ml-auto flex items-center">
-                <PermisionComponent />
+                <PermissionComponent />
 
                 {/* Search */}
                 <div className="flex lg:ml-6">

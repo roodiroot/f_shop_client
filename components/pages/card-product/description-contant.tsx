@@ -2,13 +2,13 @@ import ContentMarkdown from "@/components/general/content-markdown";
 
 const product = {
   highlights: [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
+    "Аккуратный крой и качественный пошив",
+    "Стойкое окрашивание ткани",
+    "Предварительная стирка для сохранения формы",
+    "Мягкий хлопок высокого качества",
   ],
   details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+    "В комплект входит 6 базовых футболок: две черные, две белые и две серо-меланжевые. Универсальная модель для повседневного гардероба, легко сочетается с разными образами.",
 };
 
 interface DescriptionContentProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -33,7 +33,9 @@ const DescriptionContent: React.FC<DescriptionContentProps> = ({
       </div>
 
       <div className="mt-10">
-        <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
+        <h3 className="text-sm font-medium text-gray-900">
+          Ключевые особенности
+        </h3>
 
         <div className="mt-4">
           <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
@@ -47,7 +49,7 @@ const DescriptionContent: React.FC<DescriptionContentProps> = ({
       </div>
 
       <div className="mt-10">
-        <h2 className="text-sm font-medium text-gray-900">Details</h2>
+        <h2 className="text-sm font-medium text-gray-900">Детали изделия</h2>
 
         <div className="mt-4 space-y-6">
           <p className="text-sm text-gray-600">{product.details}</p>

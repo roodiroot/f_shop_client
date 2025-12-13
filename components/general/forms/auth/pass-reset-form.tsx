@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { resetPassword } from "@/data/user";
+import { resetPassword } from "@/data/api/user";
 import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { resetPasswordSchema } from "@/schemas/auth";

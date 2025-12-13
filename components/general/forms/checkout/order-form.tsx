@@ -11,14 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useCart } from "@/hooks/use-cart";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateOrderApi } from "@/data/order/order";
 
 import { orderFormSchema } from "@/schemas/order";
@@ -28,13 +28,9 @@ import InputPhone from "@/components/ui/input-phone";
 interface OrderFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
-  const { createOrderApi, error, loading } = useCreateOrderApi();
+  const router = useRouter();
+  const { createOrderApi } = useCreateOrderApi();
   const { items, clearCart } = useCart();
-
-  const totalPrice = items.reduce(
-    (sum, item) => item.price * item.quantity + sum,
-    0
-  );
 
   const form = useForm<z.infer<typeof orderFormSchema>>({
     resolver: zodResolver(orderFormSchema),
@@ -50,24 +46,48 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof orderFormSchema>) => {
-    try {
-      const res = await createOrderApi({
-        totalPrice: totalPrice,
-        deliveryAddress: values?.address || "",
-        email: values?.email,
-        comment: values?.comment,
-        phone: values?.phone,
-        cartItems: items,
+    if (items.map((i) => i.stock <= 0 || !i.stock)[0]) {
+      return toast({
+        title: "Часть товаров в вашем заказе закончились",
+        description: "Удалите их и попробуйте еще раз.",
       });
+    }
+
+    const payload = {
+      customer: {
+        phone: values.phone,
+        email: values.email,
+        deliveryAddress: values.address,
+        comment: "Мое имя - " + values.name + ". " + values.comment,
+      },
+      paymentMethod: "card",
+      items: items.map((i) => {
+        return {
+          variantId: i.variantId,
+          quantity: i.quantity,
+        };
+      }),
+    };
+
+    try {
+      const res = await createOrderApi(payload);
 
       if (res.success) {
-        toast({
-          title: `Заказ ${res.orderId} успешно оформлен!`,
-          description:
-            "Мы отправили подтверждение и детали заказа на вашу почту.",
-        });
+        if (res.data?.orderId) {
+          router.push(`/order/${res.data.orderId}`);
+        }
+        if (res.data?.confirmationUrl) {
+          window.open(res.data.confirmationUrl, "_blank");
+        }
+
         clearCart();
         form.reset();
+      }
+      if (res.error) {
+        toast({
+          title: `Ошибка оформления заказа!`,
+          description: (res.error as { message?: string })?.message,
+        });
       }
     } catch (error) {
       const message =
@@ -86,7 +106,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6"
       >
-        <h2 className="text-lg font-medium text-neutral-800">
+        <h2 className="text-lg font-medium text-gray-800">
           Контактная информация
         </h2>
 
@@ -95,7 +115,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ваше имя ПРИВЕТ</FormLabel>
+              <FormLabel>Ваше имя</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -172,7 +192,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
                   onCheckedChange={(checked) => field.onChange(checked)}
                 />
               </FormControl>
-              <FormLabel className="text-neutral-400 text-sm font-normal">
+              <FormLabel className="text-gray-400 text-sm font-normal">
                 Я подтверждаю согласие с условиями оформления заказа и
                 обработкой персональных данных
               </FormLabel>
@@ -181,7 +201,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
           )}
         />
 
-        <div>
+        <div className="space-y-4">
           <Button
             disabled={!form.formState.isValid}
             className="w-full"
@@ -189,6 +209,10 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
           >
             Продолжить
           </Button>
+          <p className="text-sm text-gray-800">
+            После нажатия на кнопку "Продолжить", вы будете перенаправлены на
+            страницу оплаты.
+          </p>
         </div>
       </form>
     </Form>

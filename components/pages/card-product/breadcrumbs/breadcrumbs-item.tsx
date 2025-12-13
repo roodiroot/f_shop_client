@@ -11,7 +11,7 @@ const BreadcrumbsItem: React.FC<BreadcrumbItemProps> = ({ label, href }) => {
       <div className="flex items-center">
         <Link
           href={href}
-          className="mr-2 text-sm font-medium text-gray-900 line-clamp-1  group-last:text-gray-500 group-last:hover:text-gray-600"
+          className="mr-2 text-sm font-medium text-gray-900 line-clamp-1  group-last:text-gray-500 group-last:hover:text-gray-600 group-last:cursor-default group-last:pointer-events-none"
         >
           {label}
         </Link>

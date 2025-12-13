@@ -1,15 +1,13 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
 
-import client from "@/lib/apollo-client";
-
 import CatalogList from "@/components/pages/catalog/catalog-list";
 import FiltersWrapper from "@/components/pages/catalog/filters-wrapper";
+import CatalogSkeleton from "@/components/pages/catalog/skeleton/catalog-skeleton";
 
-import { getFilters } from "@/data/filters";
-import { GET_CATEGORY_BY_SLUG } from "@/graphql/category";
 import { collectSlugs } from "@/lib/collect-slugs";
-import { CategoryDocumentIdType } from "@/types/category";
+import { getCategoryBySlug } from "@/data/api/categories";
+import { getFiltersByCategory } from "@/data/api/filters";
 
 const CatalogPage = async ({
   params,
@@ -19,25 +17,28 @@ const CatalogPage = async ({
   await connection();
   const slugParams = (await params).slug;
 
-  const { data } = await client.query<CategoryDocumentIdType>({
-    query: GET_CATEGORY_BY_SLUG,
-    variables: {
-      filters: {
-        slug: { eq: slugParams.at(-1) || "" },
-      },
-    },
-  });
+  const { data, ok } = await getCategoryBySlug(slugParams.at(-1));
 
   const slugs = collectSlugs(data?.categories[0]);
-
   const c = data?.categories?.[0];
   const categoryName = c?.name || "";
   const categoryId = c?.documentId || "";
-  const filters = await getFilters(categoryId);
+
+  const { data: dataFilters, ok: okFilters } = await getFiltersByCategory(
+    categoryId
+  );
+
+  if (!ok || !okFilters) {
+    return (
+      <FiltersWrapper>
+        <CatalogSkeleton />
+      </FiltersWrapper>
+    );
+  }
 
   return (
-    <FiltersWrapper categoryName={categoryName} dataFilters={filters?.filters}>
-      <Suspense>
+    <FiltersWrapper categoryName={categoryName} dataFilters={dataFilters}>
+      <Suspense fallback={<CatalogSkeleton />}>
         <CatalogList categories={slugs} />
       </Suspense>
     </FiltersWrapper>

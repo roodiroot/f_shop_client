@@ -1,4 +1,4 @@
-import { getMe } from "./data/user";
+import { getMe } from "./data/api/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(req: NextRequest) {

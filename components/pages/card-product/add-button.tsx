@@ -17,11 +17,11 @@ const AddProductCartButton: React.FC<AddProductCartButtonProps> = ({
   const { open } = useCartModalOpen();
 
   const disabled = items
-    .map((i) => i.documentId)
-    .includes(product?.documentId || "");
+    .map((i) => i.variantId)
+    .includes(product?.variantId || "");
   const adding = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!product?.documentId) return;
+    if (!product?.variantId) return;
 
     addToCart({ ...product, quantity: 1 });
 
@@ -30,6 +30,20 @@ const AddProductCartButton: React.FC<AddProductCartButtonProps> = ({
       description: product?.name,
     });
   };
+
+  if (!product?.stock) {
+    return (
+      <button
+        className={cn(
+          disabled && "",
+          "cursor-pointer mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-brand px-8 py-3 text-base font-medium text-white hover:bg-brand/90 focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:outline-hidden disabled:cursor-default disabled:bg-neutral-400"
+        )}
+      >
+        Уведомить о поступлении
+      </button>
+    );
+  }
+
   return (
     <button
       onClick={disabled ? open : adding}

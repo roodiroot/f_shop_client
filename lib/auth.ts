@@ -1,5 +1,5 @@
 // app/lib/auth.ts
-import { getMe } from "@/data/user";
+import { getMe } from "@/data/api/user";
 import { UserAuth } from "@/types/user";
 import { cookies } from "next/headers";
 

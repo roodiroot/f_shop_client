@@ -10,6 +10,7 @@ import { FunnelIcon } from "@heroicons/react/20/solid";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { Filters } from "@/types/filters";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FiltersWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
   categoryName?: string;
@@ -37,10 +38,14 @@ const FiltersWrapper: React.FC<FiltersWrapperProps> = ({
         )}
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              {categoryName}
-            </h1>
+          <div className="flex items-end justify-between border-b border-gray-200 pt-24 pb-6">
+            {categoryName ? (
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pr-4">
+                {categoryName}
+              </h1>
+            ) : (
+              <Skeleton className="h-10 w-xs" />
+            )}
 
             <div className="flex items-center">
               <Sort />
@@ -62,10 +67,11 @@ const FiltersWrapper: React.FC<FiltersWrapperProps> = ({
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              {isDesktop && (
+              {isDesktop && dataFilters ? (
                 <FormFilter dataFilters={dataFilters} className="text-sm" />
+              ) : (
+                <CatSkeletArr />
               )}
-              {/* Product grid */}
               <div className="lg:col-span-3">{children}</div>
             </div>
           </section>
@@ -76,3 +82,18 @@ const FiltersWrapper: React.FC<FiltersWrapperProps> = ({
 };
 
 export default FiltersWrapper;
+
+const CatSkeletArr = () => {
+  return (
+    <div className="hidden lg:block">
+      <div className="flex pb-6 flex-col gap-4 ">
+        {new Array(4).fill("").map((_, index) => (
+          <Skeleton className="h-5" key={index} />
+        ))}
+      </div>
+      <div className="py-6 border-y">
+        <Skeleton className="h-5" />
+      </div>
+    </div>
+  );
+};

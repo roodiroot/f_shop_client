@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { loginUser } from "@/data/user";
+import { loginUser } from "@/data/api/user";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";

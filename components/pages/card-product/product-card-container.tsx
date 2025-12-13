@@ -8,25 +8,21 @@ import DescriptionContent from "./description-contant";
 
 import { VariantPicker } from "./variant-picker";
 
-import { ProductVariant } from "@/types/products";
+import { Product, ProductVariant } from "@/types/products";
 
 interface ProductCardContainerProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  shortName: string;
-  categoryParam?: string;
+  product: Product;
   variants: ProductVariant[];
   colors: string[];
   variantsByColor: Record<string, ProductVariant[]>;
-  description?: string;
 }
 
 const ProductCardContainer: React.FC<ProductCardContainerProps> = ({
-  shortName,
-  categoryParam,
+  product,
   variants,
   colors,
   variantsByColor,
-  description,
 }) => {
   const defaultVariant: ProductVariant | null = useMemo(() => {
     const firstColor = colors[0];
@@ -50,16 +46,20 @@ const ProductCardContainer: React.FC<ProductCardContainerProps> = ({
     <>
       <ImageGallery images={galleryImages} />
       <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
-        <HeadProduct title={categoryParam + " " + shortName} />
+        <HeadProduct title={product?.categoryParam + " " + product.shortName} />
 
         <VariantPicker
+          documentIdProduct={product.documentId}
+          slugProduct={product.slug}
+          shortName={product.shortName}
+          image={galleryImages[0]?.image}
           variants={variants}
           colors={colors}
           variantsByColor={variantsByColor}
           onVariantChange={setCurrentVariant}
         />
 
-        <DescriptionContent description={description} />
+        <DescriptionContent description={product?.description} />
       </div>
     </>
   );

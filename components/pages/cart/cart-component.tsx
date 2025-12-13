@@ -18,7 +18,7 @@ import CartItemProduct from "./cart-item-product";
 
 const CartComponent = () => {
   const { isOpen, close } = useCartModalOpen();
-  const { items, removeFromCart } = useCart();
+  const { items, removeFromCart, updateItemQuantity } = useCart();
   const { ask } = useConfirm();
 
   const removeItemCart = (documentId: string) => {
@@ -50,14 +50,17 @@ const CartComponent = () => {
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
                     {items.map((product) => (
                       <CartItemProduct
-                        key={product.documentId}
-                        documentId={product.documentId}
+                        key={product.variantId}
+                        documentId={product.variantId}
                         slug={product.slug}
+                        stock={product.stock}
                         imageUrl={product.imageUrl}
                         name={product.name}
+                        size={product.size}
                         price={product.price}
                         color={product.color}
                         quantity={product.quantity}
+                        updateItemQuantity={updateItemQuantity}
                         removeFromCart={removeItemCart}
                         close={close}
                       />

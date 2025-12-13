@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 
-import { requestResetPassword } from "@/data/user";
+import { requestResetPassword } from "@/data/api/user";
 import { requestResetPasswordSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 

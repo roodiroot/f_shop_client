@@ -1,41 +1,21 @@
-import client from "@/lib/apollo-client";
-
-import Container from "@/components/ui/container";
+import NoProduct from "@/components/pages/card-product/skeletons/no-product";
 import Breadcrumbs from "@/components/pages/card-product/breadcrumbs/breadcrumbs";
 import ProductCardContainer from "@/components/pages/card-product/product-card-container";
 
-import { GET_PRODUCT_BY_SLUG } from "@/graphql/products";
-
-import { Product } from "@/types/products";
 import { buildBreadcrumbs } from "@/lib/build-category-trail";
+import { getProductBySlag } from "@/data/api/products";
+import ProductFeatures from "@/components/pages/card-product/product-features/product-features";
 
 const ProductPage = async ({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) => {
-  const paramsResolved = (await params).slug;
+  const slug = (await params).slug;
+  const { data: product, ok } = await getProductBySlag(slug);
 
-  const { data } = await client.query<{ products: Product[] }>({
-    query: GET_PRODUCT_BY_SLUG,
-    variables: {
-      filters: {
-        slug: {
-          eq: paramsResolved,
-        },
-      },
-    },
-    fetchPolicy: "no-cache",
-  });
-
-  const product = data?.products[0] || null;
-
-  if (!product) {
-    return (
-      <Container className="bg-white">
-        <div className="text-center">Товар не найден</div>
-      </Container>
-    );
+  if (!ok || !product) {
+    return <NoProduct />;
   }
 
   const crumbs = buildBreadcrumbs(product);
@@ -52,13 +32,12 @@ const ProductPage = async ({
     <div className="pt-6 bg-white">
       <Breadcrumbs crumbs={crumbs} />
       <ProductCardContainer
-        shortName={product.shortName}
-        description={product?.description}
-        categoryParam={product?.categoryParam}
+        product={product}
         variants={variants}
         colors={colors}
         variantsByColor={variantsByColor}
       />
+      <ProductFeatures />
     </div>
   );
 };

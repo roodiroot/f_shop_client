@@ -1,6 +1,7 @@
 import { ShortCategoryType } from "./category";
 
 export interface ProductVariant {
+  documentId: string;
   price?: number;
   size?: string;
   color?: string;

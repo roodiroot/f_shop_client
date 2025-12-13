@@ -19,6 +19,7 @@ export const GET_PRODUCTS = gql`
         vendor
         categoryParam
         product_variants {
+          documentId
           price
           size
           color
@@ -61,6 +62,7 @@ export const GET_PRODUCT_BY_ID = gql`
       vendor
       waist
       product_variants {
+        documentId
         price
         size
         color
@@ -95,6 +97,7 @@ export const GET_PRODUCT_BY_SLUG = gql`
       vendor
       waist
       product_variants {
+        documentId
         price
         size
         color

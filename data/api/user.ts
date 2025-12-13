@@ -24,7 +24,7 @@ export const getMe = async (token: string) => {
     fetchPolicy: "no-cache",
   });
 
-  return data?.me;
+  return data?.me || null;
 };
 
 export const registerUser = async (

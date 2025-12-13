@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { getFormatPrice } from "@/lib/get-format-price";
+import { statusMap } from "@/lib/status-order";
 
 interface ItemProductOrderProps extends React.HTMLAttributes<HTMLDivElement> {
   slug: string;
@@ -10,6 +11,8 @@ interface ItemProductOrderProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   price: number;
   quantity: number;
+  status: "waiting_for_payment" | "paid" | "shipped" | "canceled";
+  updatedStatus: string;
 }
 
 const ItemProductOrder: React.FC<ItemProductOrderProps> = ({
@@ -19,7 +22,16 @@ const ItemProductOrder: React.FC<ItemProductOrderProps> = ({
   price,
   color,
   quantity,
+  status,
+  updatedStatus,
 }) => {
+  const date = new Date(updatedStatus);
+  const formatted = date?.toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
     <li className="p-4 sm:p-6 border-b last:border-0">
       <div className="flex items-center sm:items-start">
@@ -52,7 +64,7 @@ const ItemProductOrder: React.FC<ItemProductOrderProps> = ({
         <div className="flex justify-start items-center">
           <CheckCircleIcon className="size-5 text-green-400" />
           <p className="ml-2 text-sm font-medium text-neutral-500">
-            Delivered on <time dateTime="2021-07-12">July 12, 2021</time>
+            {statusMap[status]} <time dateTime="2021-07-12">{formatted}</time>
           </p>
         </div>
         <div className="mt-6 flex items-center border-t pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">

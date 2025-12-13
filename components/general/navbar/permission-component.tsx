@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
+
 import { useAuth } from "@/context/authcontext";
 import { usePathname, useRouter } from "next/navigation";
 
-const PermisionComponent = () => {
+const PermissionComponent = () => {
   const router = useRouter();
   const path = usePathname();
   const authContext = useAuth();
 
   const { auth, logout } = authContext ?? {};
 
-  const logotAndRedirect = () => {
+  const logoutAndRedirect = () => {
     logout && logout();
     if (path.split("/").includes("protected")) {
       router.push("/");
@@ -38,7 +39,7 @@ const PermisionComponent = () => {
       <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
       {auth && auth.token ? (
         <button
-          onClick={logotAndRedirect}
+          onClick={logoutAndRedirect}
           className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-800"
         >
           Выйти
@@ -55,4 +56,4 @@ const PermisionComponent = () => {
   );
 };
 
-export default PermisionComponent;
+export default PermissionComponent;

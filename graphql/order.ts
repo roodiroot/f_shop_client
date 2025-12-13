@@ -1,39 +1,65 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_ORDER = gql`
-  mutation Mutation($data: OrderInput!) {
-    createOrder(data: $data) {
-      documentId
-    }
-  }
-`;
-
-export const CREATE_ORDER_ITEM = gql`
-  mutation CreateOrderItem($data: OrderItemInput!) {
-    createOrderItem(data: $data) {
-      documentId
-    }
-  }
-`;
-
 export const GET_ORDER_BY_ID = gql`
-  query Query($filters: OrderFiltersInput) {
-    orders(filters: $filters) {
-      createdAt
+  query Order($documentId: ID!) {
+    order(documentId: $documentId) {
       deliveryAddress
-      documentId
+      comment
+      email
       totalPrice
+      statusOrder
+      phone
+      paymentMethod
+      paymentId
+      createdAt
+      updatedAt
       order_items {
-        price
         documentId
-        quantity
         title
-        product {
-          slug
+        sku
+        quantity
+        product_variant {
+          size
+          price
+          colorHex
           images {
             formats
-            url
           }
+        }
+        product {
+          slug
+        }
+      }
+    }
+  }
+`;
+export const GET_ORDER_BY_USER_ID = gql`
+  query Order(
+    $filters: OrderFiltersInput
+    $sort: [String]
+    $pagination: PaginationArg
+  ) {
+    orders(filters: $filters, sort: $sort, pagination: $pagination) {
+      documentId
+      createdAt
+      updatedAt
+      totalPrice
+      statusOrder
+      order_items {
+        documentId
+        title
+        sku
+        quantity
+        product_variant {
+          size
+          price
+          colorHex
+          images {
+            formats
+          }
+        }
+        product {
+          slug
         }
       }
     }

@@ -7,10 +7,14 @@ import ItemProductOrder from "./item-product-order";
 
 interface ListComponentOrderProps extends React.HTMLAttributes<HTMLDivElement> {
   orderItems: OrderItem[];
+  status: "waiting_for_payment" | "paid" | "shipped" | "canceled";
+  updatedStatus: string;
 }
 
 const ListComponentOrder: React.FC<ListComponentOrderProps> = ({
   orderItems,
+  status,
+  updatedStatus,
 }) => {
   return (
     <ul>
@@ -18,10 +22,12 @@ const ListComponentOrder: React.FC<ListComponentOrderProps> = ({
         <ItemProductOrder
           key={item.documentId}
           slug={item.product?.slug || ""}
-          imageUrl={getImageUrl(item.product?.images?.[0])}
+          imageUrl={getImageUrl(item.product_variant?.images?.[0])}
           name={item?.title}
-          price={Number(item?.price)}
+          price={Number(item?.product_variant.price)}
           quantity={item.quantity}
+          status={status}
+          updatedStatus={updatedStatus}
         />
       ))}
     </ul>
