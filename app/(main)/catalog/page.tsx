@@ -1,44 +1,33 @@
-import { Suspense } from "react";
-import { connection } from "next/server";
-
-import CatalogList from "@/components/pages/catalog/catalog-list";
-import FiltersWrapper from "@/components/pages/catalog/filters-wrapper";
-import CatalogSkeleton from "@/components/pages/catalog/skeleton/catalog-skeleton";
-
-import { collectSlugs } from "@/lib/collect-slugs";
-import { getCategoryBySlug } from "@/data/api/categories";
-import { getFiltersByCategory } from "@/data/api/filters";
-import CategoryPreviews from "@/components/pages/category/category-previews";
+import TitlePage from "@/components/general/title-page";
+import ParentCategoryItem from "@/components/pages/category/parent-category-item";
+import Container from "@/components/ui/container";
+import { getRootCategories } from "@/data/api/categories";
 
 const CatalogPage = async () => {
-  await connection();
-  const { data, ok } = await getCategoryBySlug();
+  const { data, ok } = await getRootCategories();
 
-  const slugs = collectSlugs(data?.categories[0]);
-
-  const c = data?.categories?.[0];
-  const categoryName = c?.name || "";
-  const categoryId = c?.documentId || "";
-
-  const { data: dataFilters, ok: okFilters } = await getFiltersByCategory(
-    categoryId
-  );
-
-  if (!ok || !okFilters) {
+  if (!ok) {
     return (
-      <FiltersWrapper>
-        <CatalogSkeleton />
-      </FiltersWrapper>
+      <Container>
+        <div className="">Loading Error</div>;
+      </Container>
     );
   }
 
   return (
-    // <FiltersWrapper categoryName={categoryName} dataFilters={dataFilters}>
-    //   <Suspense fallback={<div>Loading...</div>}>
-    //     <CatalogList categories={slugs} />
-    //   </Suspense>
-    // </FiltersWrapper>
-    <CategoryPreviews />
+    <Container className="pt-0 sm:pt-0 lg:pt-0 mx-auto lg:max-w-4xl">
+      <TitlePage>Категории</TitlePage>
+      <div className="space-y-10">
+        {data?.map((i) => (
+          <ParentCategoryItem
+            key={i.documentId}
+            slug={i.slug}
+            image={i.image}
+            childrens={i.children}
+          />
+        ))}
+      </div>
+    </Container>
   );
 };
 

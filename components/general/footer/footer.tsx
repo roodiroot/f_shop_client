@@ -1,36 +1,10 @@
 import { Icons } from "@/components/ui/icons";
+import { footerNavigation } from "@/config/navigation";
+import Link from "next/link";
 
-const pages = [
-  {
-    name: "Покупателям",
-    pages: [
-      { name: "Блог" },
-      { name: "Доставка и оплата" },
-      { name: "Возврат товара" },
-      { name: "FAQ" },
-      { name: "Гайд по размерам" },
-    ],
-  },
-  {
-    name: "О компании",
-    pages: [
-      { name: "Про нас" },
-      { name: "Контакты" },
-      { name: "Гарантия качества" },
-    ],
-  },
-  {
-    name: "Информация",
-    pages: [
-      { name: "Оферта" },
-      { name: "Персональные данные" },
-      { name: "Политика конфиденциальности" },
-    ],
-  },
-];
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 text-sm">
+    <footer className="bg-gray-50 text-sm overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 py-20 md:grid-flow-col md:auto-rows-min md:grid-cols-12 md:gap-x-8 md:gap-y-16">
           {/* <!-- Image section --> */}
@@ -40,15 +14,15 @@ const Footer = () => {
 
           <div className="col-span-6 mt-10 grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-8 md:col-start-3 md:row-start-1 md:mt-0 lg:col-span-6 lg:col-start-2">
             <div className="grid grid-cols-1 gap-y-12 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
-              {pages.slice(0, 2).map((i) => (
-                <div key={i.name}>
-                  <h3 className="font-medium text-gray-900">{i.name}</h3>
+              {footerNavigation.slice(0, 2).map((i) => (
+                <div key={i.title}>
+                  <h3 className="font-medium text-gray-900">{i.title}</h3>
                   <ul role="list" className="mt-6 space-y-6">
-                    {i.pages.map((e) => (
+                    {i.links.map((e) => (
                       <li key={e.name}>
-                        <a href="#" className="text-gray-500">
+                        <Link href={e.href} className="text-gray-500">
                           {e.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -56,16 +30,20 @@ const Footer = () => {
               ))}
             </div>
             <div>
-              <h3 className="font-medium text-gray-900">{pages[2].name}</h3>
-              <ul role="list" className="mt-6 space-y-6">
-                {pages[2]?.pages.map((e) => (
-                  <li key={e.name}>
-                    <a href="#" className="text-gray-500">
-                      {e.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {footerNavigation.slice(2, 3).map((i) => (
+                <div key={i.title}>
+                  <h3 className="font-medium text-gray-900">{i.title}</h3>
+                  <ul role="list" className="mt-6 space-y-6">
+                    {i.links.map((e) => (
+                      <li key={e.name}>
+                        <Link href={e.href} className="text-gray-500">
+                          {e.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
 

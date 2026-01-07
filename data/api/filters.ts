@@ -1,6 +1,3 @@
-import { GET_CATEGORY_BY_SLUG } from "@/graphql/category";
-import client from "@/lib/apollo-client";
-import { CategoryDocumentIdType } from "@/types/category";
 import { ApiResult } from "./types";
 import { Filters } from "@/types/filters";
 

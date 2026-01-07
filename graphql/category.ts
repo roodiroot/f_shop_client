@@ -45,6 +45,10 @@ export const GET_CATEGORIES_ROOT = gql`
       slug
       name
       documentId
+      description
+      image {
+        formats
+      }
       products(sort: $productSort, pagination: { limit: 4 }) {
         slug
         documentId
@@ -54,6 +58,9 @@ export const GET_CATEGORIES_ROOT = gql`
         slug
         name
         documentId
+        image {
+          formats
+        }
         products(pagination: { limit: 1 }) {
           slug
           documentId
@@ -69,6 +76,22 @@ export const GET_CATEGORIES_ROOT = gql`
             }
           }
         }
+      }
+    }
+  }
+`;
+
+export const GET_CATEGORIES_SHORT = gql`
+  query Categories($filters: CategoryFiltersInput, $categorySort: [String]) {
+    categories(sort: $categorySort, filters: $filters) {
+      slug
+      name
+      documentId
+      icon {
+        url
+      }
+      image {
+        formats
       }
     }
   }

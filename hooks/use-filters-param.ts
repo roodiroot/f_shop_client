@@ -1,8 +1,7 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export function useFilterParams() {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const pushParams = (params: URLSearchParams) => {

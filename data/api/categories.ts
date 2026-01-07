@@ -1,7 +1,15 @@
 import client from "@/lib/apollo-client";
 
-import { GET_CATEGORIES_ROOT, GET_CATEGORY_BY_SLUG } from "@/graphql/category";
-import { CategoryDocumentIdType, CategoryRootType } from "@/types/category";
+import {
+  GET_CATEGORIES_ROOT,
+  GET_CATEGORIES_SHORT,
+  GET_CATEGORY_BY_SLUG,
+} from "@/graphql/category";
+import {
+  CategoryDocumentIdType,
+  CategoryRootType,
+  CategoryScreen,
+} from "@/types/category";
 import { ApiResult } from "./types";
 
 export async function getRootCategories(): Promise<
@@ -41,6 +49,42 @@ export async function getRootCategories(): Promise<
   }
 }
 
+export const getChildrenCategories = async (): Promise<
+  ApiResult<CategoryScreen[]>
+> => {
+  try {
+    const { data } = await client.query<{ categories: CategoryScreen[] }>({
+      query: GET_CATEGORIES_SHORT,
+      variables: {
+        filters: {
+          products: {
+            documentId: {
+              notNull: true,
+            },
+          },
+        },
+      },
+    });
+
+    if (!data?.categories) {
+      return {
+        ok: false,
+        error: "Пустой ответ от сервера ",
+      };
+    }
+    return {
+      ok: true,
+      data: data.categories,
+    };
+  } catch (error) {
+    console.error("safeGetFiltersByCategory error", error);
+    return {
+      ok: false,
+      error: "Не удалось загрузить категории. Попробуйте позже.",
+    };
+  }
+};
+
 export const getCategoryBySlug = async (
   slug?: string
 ): Promise<ApiResult<CategoryDocumentIdType>> => {
@@ -53,6 +97,7 @@ export const getCategoryBySlug = async (
         },
       },
     });
+
     if (!data?.categories) {
       return {
         ok: false,

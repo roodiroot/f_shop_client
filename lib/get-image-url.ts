@@ -2,7 +2,7 @@ import { ProductImage } from "@/types/products";
 
 export function getImageUrl(
   image?: ProductImage | null,
-  variant?: "small" | "medium" | "large"
+  variant?: "small" | "medium" | "large" | "thumbnail"
 ) {
   const base = process.env.NEXT_PUBLIC_STRAPI_API_URL || "";
   if (!image) {
@@ -23,6 +23,14 @@ export function getImageUrl(
     url =
       formats?.medium?.url ??
       formats?.small?.url ??
+      formats?.large?.url ??
+      null;
+  }
+  if (variant === "thumbnail") {
+    url =
+      formats?.thumbnail?.url ??
+      formats?.small?.url ??
+      formats?.medium?.url ??
       formats?.large?.url ??
       null;
   }
