@@ -35,7 +35,7 @@ const ItemProductOrder: React.FC<ItemProductOrderProps> = ({
   return (
     <li className="p-4 sm:p-6 border-b last:border-0">
       <div className="flex items-center sm:items-start">
-        <div className="size-40 shrink-0 overflow-hidden rounded-md border border-gray-200">
+        <div className="w-30 aspect-[1/1.3] shrink-0 overflow-hidden rounded-md border border-gray-200">
           <Image
             width={160}
             height={160}
@@ -51,7 +51,7 @@ const ItemProductOrder: React.FC<ItemProductOrderProps> = ({
               <h3>
                 <Link href={`/product/${slug}`}>{name}</Link>
               </h3>
-              <p className="ml-4">{getFormatPrice(price * quantity)}</p>
+              <p className="ml-4 text-sm">{getFormatPrice(price * quantity)}</p>
             </div>
             <p className="mt-1 text-sm text-gray-500">{color}</p>
           </div>

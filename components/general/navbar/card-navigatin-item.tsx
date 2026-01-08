@@ -28,7 +28,7 @@ const CardNavigationItem: React.FC<CardNavigationItemProps> = ({
         height={200}
         alt={product.shortName + "_image"}
         src={getImageUrl(img)}
-        className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
+        className="aspect-[1/1.3] w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
       />
       <Link
         href={`/product/${product.slug}`}

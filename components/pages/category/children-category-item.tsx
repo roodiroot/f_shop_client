@@ -1,3 +1,5 @@
+"use client";
+
 import { getImageUrl } from "@/lib/get-image-url";
 import { ProductImage } from "@/types/products";
 import Image from "next/image";

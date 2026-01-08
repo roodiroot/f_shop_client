@@ -56,11 +56,12 @@ const MobilMenu: React.FC<MobilMenuProps> = ({ dataCategories }) => {
             <TabsPrimitive.List className="-mb-px flex space-x-8 px-4">
               {dataCategories
                 ?.filter((i) => i.products.length <= 0)
+                ?.slice(0, 3)
                 ?.map((category) => (
                   <TabsPrimitive.TabsTrigger
                     key={category.documentId}
                     value={category.documentId}
-                    className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600"
+                    className="text-sm flex-1 border-b-2 border-transparent px-1 py-4 font-medium whitespace-nowrap text-gray-500 data-[state=active]:border-gray-900 data-[state=active]:text-gray-900"
                   >
                     {category.name}
                   </TabsPrimitive.TabsTrigger>
@@ -134,6 +135,7 @@ const MobilMenu: React.FC<MobilMenuProps> = ({ dataCategories }) => {
             <div key={page.name} className="flow-root">
               <Link
                 href={page.href}
+                onClick={close}
                 className="-m-2 block p-2 font-medium text-gray-900"
               >
                 {page.name}
@@ -146,6 +148,7 @@ const MobilMenu: React.FC<MobilMenuProps> = ({ dataCategories }) => {
           <div className="flow-root">
             <Link
               href="/login"
+              onClick={close}
               className="-m-2 block p-2 font-medium text-gray-900"
             >
               Логин
@@ -154,6 +157,7 @@ const MobilMenu: React.FC<MobilMenuProps> = ({ dataCategories }) => {
           <div className="flow-root">
             <Link
               href="/register"
+              onClick={close}
               className="-m-2 block p-2 font-medium text-gray-900"
             >
               Создать акаунт

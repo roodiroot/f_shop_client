@@ -5,8 +5,8 @@ import { useFilterParams } from "@/hooks/use-filters-param";
 
 const sortOptions = [
   { label: "По умолчанию", value: "default" },
-  { label: "Сначала дешевые", value: "price:asc" },
-  { label: "Сначала дорогие", value: "price:desc" },
+  { label: "Сначала дешевые", value: "product_variants.price:asc" },
+  { label: "Сначала дорогие", value: "product_variants.price:desc" },
   { label: "Сначала новые", value: "createdAt:desc" },
 ];
 

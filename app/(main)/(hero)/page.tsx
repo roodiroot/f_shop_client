@@ -6,7 +6,6 @@ import {
   getRootCategories,
 } from "@/data/api/categories";
 import { getProducts } from "@/data/api/products";
-import Link from "next/link";
 
 const HomePaage = async () => {
   const PAGE_SIZE_HITS = 10;
@@ -35,7 +34,10 @@ const HomePaage = async () => {
     <>
       <HeroBLock variant="line" />
       <PresentProductsBlock title="Рекомендуем вам" data={saleHitProd} />
-      <CategoryPreviews data={parentCategories} />
+      <CategoryPreviews
+        data={parentCategories}
+        dataSubCategories={sabCategories}
+      />
       <PresentProductsBlock title="Новинки" data={newProd} />
     </>
   );

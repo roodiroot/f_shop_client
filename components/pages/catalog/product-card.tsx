@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const img = product.product_variants[0].images?.[0];
   return (
     <div className="group relative">
-      <div className="relative flex flex-end items-end p-4 aspect-square w-full rounded-md bg-gray-200 object-cover overflow-hidden group-hover:opacity-75 lg:aspect-auto lg:h-80 ">
+      <div className="relative flex flex-end items-end p-4 aspect-[1.5/2] w-full rounded-md bg-gray-200 object-cover overflow-hidden group-hover:opacity-75 lg:aspect-auto lg:h-80 ">
         <Image
           width={150}
           height={300}

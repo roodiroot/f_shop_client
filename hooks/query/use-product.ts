@@ -11,21 +11,24 @@ import { useQuery } from "@apollo/client/react";
 
 interface UseProductParams {
   filters?: ProductFilters;
+  skip?: boolean;
   sort?: SortParams;
   pagination?: PaginationParams;
 }
 
 export const useProduct = ({
   filters = {},
+  skip = false,
   sort = ["createdAt:desc"],
   pagination = { page: 1, pageSize: 12 },
 }: UseProductParams) => {
   const { data, loading, error } = useQuery<ProductsQueryResponse>(
     GET_PRODUCTS,
     {
+      skip,
       variables: {
-        filters: filters,
-        sort: sort,
+        filters,
+        sort,
         pagination,
       },
     }
