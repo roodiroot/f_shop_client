@@ -20,12 +20,14 @@ import { Button } from "@/components/ui/button";
 import { resetPasswordSchema } from "@/schemas/auth";
 
 import InputPassword from "@/components/ui/input-password";
+import { useState } from "react";
 
 interface PassResetFormProps extends React.HTMLAttributes<HTMLFormElement> {
   code: string;
 }
 
 const PassResetForm: React.FC<PassResetFormProps> = ({ code }) => {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
   const authContext = useAuth();
   const { login } = authContext ?? {};
@@ -40,6 +42,7 @@ const PassResetForm: React.FC<PassResetFormProps> = ({ code }) => {
   });
 
   const onSubmit = async (value: z.infer<typeof resetPasswordSchema>) => {
+    setDisabled(true);
     try {
       const user = await resetPassword({
         code: value.code,
@@ -64,6 +67,7 @@ const PassResetForm: React.FC<PassResetFormProps> = ({ code }) => {
       });
     }
     form.reset();
+    setDisabled(false);
   };
 
   return (
@@ -96,7 +100,7 @@ const PassResetForm: React.FC<PassResetFormProps> = ({ code }) => {
           )}
         />
         <div>
-          <Button className="w-full" type="submit">
+          <Button disabled={disabled} className="w-full" type="submit">
             Сохранить
           </Button>
         </div>

@@ -19,11 +19,14 @@ import { Button } from "@/components/ui/button";
 import { requestResetPassword } from "@/data/api/user";
 import { requestResetPasswordSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 interface RequestPassResetFormProps
   extends React.HTMLAttributes<HTMLFormElement> {}
 
 const RequestPassResetForm: React.FC<RequestPassResetFormProps> = () => {
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof requestResetPasswordSchema>>({
     resolver: zodResolver(requestResetPasswordSchema),
     defaultValues: {
@@ -34,6 +37,7 @@ const RequestPassResetForm: React.FC<RequestPassResetFormProps> = () => {
   const onSubmit = async (
     value: z.infer<typeof requestResetPasswordSchema>
   ) => {
+    setDisabled(true);
     try {
       await requestResetPassword(value.email);
 
@@ -50,6 +54,7 @@ const RequestPassResetForm: React.FC<RequestPassResetFormProps> = () => {
       });
     }
     form.reset();
+    setDisabled(false);
   };
 
   return (
@@ -72,7 +77,7 @@ const RequestPassResetForm: React.FC<RequestPassResetFormProps> = () => {
           )}
         />
         <div>
-          <Button className="w-full" type="submit">
+          <Button disabled={disabled} className="w-full" type="submit">
             Отправить
           </Button>
         </div>

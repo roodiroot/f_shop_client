@@ -22,10 +22,13 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { registrationFormSchema } from "@/schemas/auth";
+import { useState } from "react";
 
 interface RegisterFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ ...props }) => {
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof registrationFormSchema>>({
     resolver: zodResolver(registrationFormSchema),
     defaultValues: {
@@ -37,6 +40,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ ...props }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof registrationFormSchema>) => {
+    setDisabled(true);
     try {
       const data = await registerUser({
         username: values.username,
@@ -58,6 +62,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ ...props }) => {
         description: message,
       });
     }
+    setDisabled(false);
   };
 
   return (
@@ -133,7 +138,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ ...props }) => {
           )}
         />
         <div>
-          <Button className="w-full" type="submit">
+          <Button disabled={disabled} className="w-full" type="submit">
             Войти
           </Button>
         </div>

@@ -24,10 +24,12 @@ import { useCreateOrderApi } from "@/data/order/order";
 import { orderFormSchema } from "@/schemas/order";
 
 import InputPhone from "@/components/ui/input-phone";
+import { useState } from "react";
 
 interface OrderFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
   const { createOrderApi } = useCreateOrderApi();
   const { items, clearCart } = useCart();
@@ -46,6 +48,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof orderFormSchema>) => {
+    setDisabled(true);
     if (items.map((i) => i.stock <= 0 || !i.stock)[0]) {
       return toast({
         title: "Часть товаров в вашем заказе закончились",
@@ -97,6 +100,8 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
         description: message,
       });
     }
+
+    setDisabled(false);
   };
 
   return (
@@ -203,7 +208,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ ...props }) => {
 
         <div className="space-y-4">
           <Button
-            disabled={!form.formState.isValid}
+            disabled={!form.formState.isValid || disabled}
             className="w-full"
             type="submit"
           >

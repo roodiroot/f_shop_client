@@ -22,10 +22,12 @@ import { useAuth } from "@/context/authcontext";
 import { loginFormSchema } from "@/schemas/auth";
 
 import InputPassword from "@/components/ui/input-password";
+import { useState } from "react";
 
 interface LoginFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
   const authContext = useAuth();
   const { login } = authContext ?? {};
@@ -39,6 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   });
 
   const onSubmit = async (value: z.infer<typeof loginFormSchema>) => {
+    setDisabled(true);
     try {
       const user = await loginUser({
         identifier: value.identifier,
@@ -61,6 +64,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
       });
     }
     form.reset();
+    setDisabled(false);
   };
 
   return (
@@ -102,7 +106,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         />
 
         <div>
-          <Button className="w-full" type="submit">
+          <Button disabled={disabled} className="w-full" type="submit">
             Войти
           </Button>
         </div>
