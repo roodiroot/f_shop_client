@@ -72,7 +72,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-300 py-10 text-center">
-          <p className="text-sm text-gray-500">© 2025 Your Company, Inc.</p>
+          <p className="text-sm text-gray-500">© 2026 Your Company, Inc.</p>
         </div>
       </div>
     </footer>

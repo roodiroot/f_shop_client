@@ -10,6 +10,8 @@ import "./globals.css";
 import ToasterRootComponent from "@/components/general/toaster/toaster-root-component";
 import ConfirmDialog from "@/components/general/confirm/confirm-dialog";
 import { AuthProvider } from "@/context/authcontext";
+import { Suspense } from "react";
+import { MetrikaTracker } from "@/components/general/metrika-tracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,6 +88,9 @@ export default function RootLayout({
             <ConfirmDialog />
           </AuthProvider>
         </ApolloWrapper>
+        <Suspense>
+          <MetrikaTracker />
+        </Suspense>
       </body>
     </html>
   );
