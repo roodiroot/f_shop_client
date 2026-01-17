@@ -24,11 +24,11 @@ const CatalogPage = async ({
   const categoryName = c?.name || "";
   const categoryId = c?.documentId || "";
 
-  const { data: dataFilters, ok: okFilters } = await getFiltersByCategory(
-    categoryId
-  );
+  const { data: dataFilters, ok: okFilters } =
+    await getFiltersByCategory(categoryId);
 
   if (!ok || !okFilters) {
+    
     return (
       <FiltersWrapper>
         <CatalogSkeleton />

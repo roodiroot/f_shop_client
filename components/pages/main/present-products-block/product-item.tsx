@@ -33,7 +33,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           priority
           alt={"_image"}
           src={getImageUrl(image, "large")}
-          className="aspect-[1/1.3] w-full rounded-md object-cover h-auto"
+          className="aspect-[1/1.5] w-full rounded-md object-cover h-auto"
         />
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600 tracking-tight">{name}</p>

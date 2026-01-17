@@ -23,31 +23,29 @@ const CategoriesSaleCarousel: React.FC<CategoriesSaleCarouselProps> = ({
         align: "start",
         loop: true,
       }}
-      className="w-full "
+      className="w-full"
     >
-      <div className="">
-        <CarouselContent>
-          {data
-            ? data.map((category, index) => {
-                return (
-                  <CarouselItem
-                    key={category.slug + index}
-                    className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 pl-2"
-                  >
-                    <div className="p-1 h-full">
-                      <ChildrenCategoryItem
-                        slug={category.slug}
-                        parentSlug={category.slug}
-                        name={category.name}
-                        image={category.image}
-                      />
-                    </div>
-                  </CarouselItem>
-                );
-              })
-            : null}
-        </CarouselContent>
-      </div>
+      <CarouselContent>
+        {data
+          ? data.map((category, index) => {
+              return (
+                <CarouselItem
+                  key={category.slug + index}
+                  className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 pl-2"
+                >
+                  <div className="p-1 h-full">
+                    <ChildrenCategoryItem
+                      slug={category.slug}
+                      parentSlug={category.slug}
+                      name={category.name}
+                      image={category.image}
+                    />
+                  </div>
+                </CarouselItem>
+              );
+            })
+          : null}
+      </CarouselContent>
       {data?.length && data?.length > 5 ? <CarouselButtons /> : null}
     </Carousel>
   );

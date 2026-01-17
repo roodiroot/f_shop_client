@@ -2,8 +2,7 @@ import ProductsSaleCarousel from "@/components/pages/main/products-carusel/produ
 import { Product } from "@/types/products";
 import Link from "next/link";
 
-interface PresentProductsBlockProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface PresentProductsBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   data?: Product[];
 }
