@@ -1,9 +1,12 @@
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface ProductCardCaruselProps extends React.HTMLAttributes<HTMLDivElement> {
   imagesArrey?: string[];
@@ -11,8 +14,24 @@ interface ProductCardCaruselProps extends React.HTMLAttributes<HTMLDivElement> {
 const ProductCardCarusel: React.FC<ProductCardCaruselProps> = ({
   imagesArrey,
 }) => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
     <Carousel
+      setApi={setApi}
       opts={{
         align: "start",
         loop: true,
@@ -35,6 +54,20 @@ const ProductCardCarusel: React.FC<ProductCardCaruselProps> = ({
           </CarouselItem>
         ))}
       </CarouselContent>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 opacity-70">
+        {count > 1 &&
+          new Array(count)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "h-0.5 w-3 rounded-full bg-gray-200",
+                  current === index + 1 && "bg-gray-400"
+                )}
+              />
+            ))}
+      </div>
     </Carousel>
   );
 };

@@ -97,7 +97,7 @@ export function VariantPicker({
             href={reviews.href}
             className="ml-3 text-sm font-medium text-brand hover:text-brand/80"
           >
-            {reviews.totalCount} reviews
+            {reviews.totalCount} отзывов
           </a>
         </div>
       </div>
