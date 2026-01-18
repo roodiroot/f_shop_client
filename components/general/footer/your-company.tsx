@@ -1,5 +1,4 @@
 import { Icons } from "@/components/ui/icons";
-import Link from "next/link";
 
 const YourCompany = () => {
   return (
