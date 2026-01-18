@@ -15,18 +15,19 @@ const HeroBLock: React.FC<HeroBLockProps> = ({ variant = "default" }) => {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
               <div className="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
                 <div className="lg:pr-16">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl ">
                     Время быть заметным
                   </h1>
-                  <p className="mt-4 text-xl text-gray-600">
-                    Коллекция создана для тех, кто привлекает внимание случайно.
+                  <p className="mt-4 text-xl text-gray-600 uppercase font-light tracking-tight text-balance">
+                    Коллекция создана для тех, чье присутствие привлекает
+                    внимание.
                   </p>
                   <div className="mt-6">
                     <Link
-                      href="/catalog"
+                      href="/catalog/osnovnoj-katalog"
                       className="inline-block rounded-md border border-transparent bg-brand px-8 py-3 text-center font-medium text-white hover:bg-brand/80"
                     >
-                      Показать коллекцию
+                      К покупкам
                     </Link>
                   </div>
                 </div>

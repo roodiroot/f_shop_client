@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="group relative">
       <div
         onClick={() => router.push(`/product/${product.slug}`)}
-        className="relative z-20 flex flex-end items-end p-4 aspect-[1.5/2] w-full rounded-md bg-gray-200 object-cover overflow-hidden group-hover:cursor-pointer group-hover:opacity-75 lg:group-hover:opacity-100 lg:aspect-auto lg:h-80"
+        className="relative z-2 flex flex-end items-end p-4 aspect-[1.5/2] w-full rounded-md bg-gray-200 object-cover overflow-hidden group-hover:cursor-pointer group-hover:opacity-75 lg:group-hover:opacity-100 lg:aspect-auto lg:h-80"
       >
         <ProductCardCarusel imagesArrey={imgs} />
       </div>
@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div>
           <h3 className="text-sm text-gray-700 line-clamp-1">
             <Link href={`/product/${product.slug}`}>
-              <span aria-hidden="true" className="absolute inset-0 z-10" />
+              <span aria-hidden="true" className="absolute inset-0 z-1" />
               {product?.categoryParam} {product?.shortName}
             </Link>
           </h3>
