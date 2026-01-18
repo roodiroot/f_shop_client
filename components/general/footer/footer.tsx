@@ -1,6 +1,7 @@
 import { Icons } from "@/components/ui/icons";
 import { footerNavigation } from "@/config/navigation";
 import Link from "next/link";
+import YourCompany from "./your-company";
 
 const Footer = () => {
   return (
@@ -71,9 +72,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-300 py-10 text-center">
-          <p className="text-sm text-gray-500">© 2026 Your Company, Inc.</p>
-        </div>
+        <YourCompany />
       </div>
     </footer>
   );

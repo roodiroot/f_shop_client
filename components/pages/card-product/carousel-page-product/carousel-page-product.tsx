@@ -70,7 +70,7 @@ const CarouselPageProduct: React.FC<CarouselPageProductProps> = ({
                 key={index}
                 onClick={() => api?.scrollTo(index)}
                 className={cn(
-                  "h-1 w-5 rounded-full bg-gray-200",
+                  "h-0.5 w-5 rounded-full bg-gray-200",
                   current === index + 1 && "bg-gray-400"
                 )}
               ></button>

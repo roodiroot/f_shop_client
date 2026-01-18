@@ -7,6 +7,8 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import PaginationCarousel from "./pagination-carousel";
+import HoverScroller from "./hover-scroller";
 
 interface ProductCardCaruselProps extends React.HTMLAttributes<HTMLDivElement> {
   imagesArrey?: string[];
@@ -41,7 +43,7 @@ const ProductCardCarusel: React.FC<ProductCardCaruselProps> = ({
       <CarouselContent>
         {imagesArrey?.map((url) => (
           <CarouselItem key={url} className="pl-0">
-            <div className="w-full h-full relative bg-red-500 aspect-[1.5/2] lg:aspect-auto lg:h-80">
+            <div className="w-full h-full relative aspect-[1.5/2] lg:aspect-auto lg:h-80">
               <Image
                 width={614}
                 height={820}
@@ -54,20 +56,8 @@ const ProductCardCarusel: React.FC<ProductCardCaruselProps> = ({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 opacity-70">
-        {count > 1 &&
-          new Array(count)
-            .fill(0)
-            .map((_, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "h-0.5 w-3 rounded-full bg-gray-200",
-                  current === index + 1 && "bg-gray-400"
-                )}
-              />
-            ))}
-      </div>
+      <HoverScroller api={api} count={count} />
+      <PaginationCarousel current={current} count={count} />
     </Carousel>
   );
 };
